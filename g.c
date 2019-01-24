@@ -555,17 +555,22 @@ int main(int argc,char *argv[]) {
 			}
 		}
 	
-	while (wait(&status) > 0);
-	return 0;
+  while (wait(&status) > 0);
+  return 0;
 #endif
+#define max(a,b) \
+  ({ __typeof__ (a) _a = (a); \
+   __typeof__ (b) _b = (b); \
+   _a > _b ? _a : _b; })
 
 #if 1 // modular forms
-	for (k=1;k<=200;k++) {
+	for (k=100;k<=200;k++) {
 		twomu[0] = k-1;
 		twomu[1] = k+1;
 		sprintf(buf,"mf/mf.%ld",k);
+    printf("mf/mf.%ld %ld\n",k, max(200, (k*10)/4));
 		fp = fopen(buf,"w");
-		computeall(fp,twomu,2,-32*M_LN2,(double)2/512,200);
+    computeall(fp,twomu,2,-32*M_LN2,(double)2/512,max(200, (k*10)/4));
 		fclose(fp);
 	}
 	return 0;
