@@ -564,13 +564,14 @@ int main(int argc,char *argv[]) {
    _a > _b ? _a : _b; })
 
 #if 1 // modular forms
-	for (k=100;k<=200;k++) {
+	for (k=1;k<=200;k++) {
 		twomu[0] = k-1;
 		twomu[1] = k+1;
 		sprintf(buf,"mf/mf.%ld",k);
-    printf("mf/mf.%ld %ld\n",k, max(200, (k*10)/4));
+    long prec = 300 + k;
+    printf("mf/mf.%ld %ld\n",k, prec);
 		fp = fopen(buf,"w");
-    computeall(fp,twomu,2,-32*M_LN2,(double)2/512,max(200, (k*10)/4));
+    computeall(fp,twomu,2,-32*M_LN2,(double)2/512, prec);
 		fclose(fp);
 	}
 	return 0;
