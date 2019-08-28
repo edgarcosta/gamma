@@ -525,13 +525,14 @@ int main(int argc,char *argv[]) {
 	char buf[32];
 	FILE *fp;
 
-#if 0 // curves of genus 2 and 3
-	for (r=4;r<=6;r+=2) {
+#if 1 // curves of genus 2 and 3
+	for (r=2;r<=6;r+=2) {
 		for (k=0;k<r/2;k++) twomu[k]=1;
 		for (;k<r;k++) twomu[k]=3;
-		sprintf(buf,"bessel/acb/gdata.%d",r);
+		sprintf(buf,"gdata.%d",r);
 		fp = fopen(buf,"w");
-		computeall(fp,twomu,r,-32*M_LN2,(double)r/512,200);
+		//computeall(fp,twomu,r,-32*M_LN2,(double)r/512,200);
+		computeall(fp,twomu,r,-32*M_LN2,(double)r/512,1200);
 		fclose(fp);
 	}
 	return 0;
@@ -563,17 +564,33 @@ int main(int argc,char *argv[]) {
    __typeof__ (b) _b = (b); \
    _a > _b ? _a : _b; })
 
-#if 1 // modular forms
-	for (k=1;k<=200;k++) {
+#if 0 // modular forms
+	for (k=1;k<=140;k++) {
 		twomu[0] = k-1;
 		twomu[1] = k+1;
 		sprintf(buf,"mf/mf.%ld",k);
-    long prec = 300 + k;
+    long prec = 300 + 2*k;
     printf("mf/mf.%ld %ld\n",k, prec);
 		fp = fopen(buf,"w");
     computeall(fp,twomu,2,-32*M_LN2,(double)2/512, prec);
 		fclose(fp);
 	}
 	return 0;
+#endif
+#if 0
+        k = atoi(argv[1]);
+        twomu[0] = k-1;
+        twomu[1] = k+1;
+        sprintf(buf,"mf/mf.%ld",k);
+        long prec;
+        if(k <= 8)
+          prec = 200;
+        else
+          prec = 300 + 2*k;
+        printf("mf/mf.%ld %ld\n",k, prec);
+        fp = fopen(buf,"w");
+        computeall(fp,twomu,2,-32*M_LN2,(double)2/512, prec);
+        fclose(fp);
+return 0;
 #endif
 }
